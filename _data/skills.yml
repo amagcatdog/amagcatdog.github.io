@@ -1,0 +1,22 @@
+- name: Language Keywords
+  keywords:
+      - C
+      - C++
+      - Python
+      - Java
+
+- name: Server Developer Keywords
+  keywords:
+      - Redis
+      - Docker
+      - kubernetes
+      - Kafka
+      - RocketMq
+      - Django
+
+- name: Distributed System Keywords
+  keywords:
+      - CAP
+      - Raft
+      - Paxos
+      - Gossip
