@@ -1,8 +1,8 @@
 ---
 layout: post
-title: template page
+title: 滑动窗口最大值
 categories: [Algorithm, Leetcode]
-description: some word here
+description: 滑动窗口最大值
 keywords: Algorithm, Leetcode, 单调队列, 最小堆
 ---
 
