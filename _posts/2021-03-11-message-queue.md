@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 消息队列
+title: 消息队列学习笔记
 categories: [消息队列]
 description: 极客时间《消息队列高手课》学习笔记
 keywords: 消息队列, RocketMq, Kafka
