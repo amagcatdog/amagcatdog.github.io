@@ -117,7 +117,7 @@ popen 函数采用管道进行父子进程间通信，并把子进程的输出�
 
 ## 参考
 
-![system()、exec()、fork()三个与进程有关的函数的比较](https://www.cnblogs.com/qingergege/p/6601807.html)
-![linux下execl和system函数](https://www.cnblogs.com/Cccarl/p/6639089.html)
-![【进程管理】fork之后子进程到底复制了父进程什么？](https://zhuanlan.zhihu.com/p/370705498)
-![popen system fork exec等函数的区别](http://cppblog.com/prayer/archive/2009/09/28/97456.html)
+- [system()、exec()、fork()三个与进程有关的函数的比较](https://www.cnblogs.com/qingergege/p/6601807.html)
+- [linux下execl和system函数](https://www.cnblogs.com/Cccarl/p/6639089.html)
+- [【进程管理】fork之后子进程到底复制了父进程什么？](https://zhuanlan.zhihu.com/p/370705498)
+- [popen system fork exec等函数的区别](http://cppblog.com/prayer/archive/2009/09/28/97456.html)

@@ -68,5 +68,5 @@ Redis 即是采用链表法解决哈希冲突的。
 
 ## 参考
 
-![互联网公司面试经——你不得不知道的哈希表](https://zhuanlan.zhihu.com/p/77533501)
-![解决哈希冲突的三种方法（拉链法、开放地址法、再散列法）](https://www.cnblogs.com/rsapaper/p/10019505.html)
+- [互联网公司面试经——你不得不知道的哈希表](https://zhuanlan.zhihu.com/p/77533501)
+- [解决哈希冲突的三种方法（拉链法、开放地址法、再散列法）](https://www.cnblogs.com/rsapaper/p/10019505.html)

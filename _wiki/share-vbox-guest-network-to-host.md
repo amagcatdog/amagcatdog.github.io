@@ -46,3 +46,11 @@ route delete 172.0.0.0 mask 255.0.0.0 192.168.137.1
 ```
 
 好了，现在可以在宿主机访问 172.x.x.x 网段。
+
+## Q&A
+
+- 共享VPN网卡报错
+
+    ![共享VPN网卡报错](/images/wiki/share-vbox-guest-network-to-host-guest-q%26a1.png)
+
+    在服务管理中启动 Windows Firewall 服务。

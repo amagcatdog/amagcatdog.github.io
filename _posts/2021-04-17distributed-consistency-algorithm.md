@@ -90,7 +90,9 @@ Basic Paxos 的上述缺点造成其几乎只用来做理论研究，业界真�
 
 2. Multi-Paxos 允许有多个自认为是 Leader 的节点并发提交 Proposal 而不影响其安全性，这样的场景即退化为 Basic Paxos。为了区分连续提交的多个 Paxos 实例，每个实例使用一个 Instance ID 标识，Instance ID 由 Leader 本地递增生成即可。
 
-另外， Leader 的选举也是一次决议的形成，可以通过执行一次 Basic Paxos 实例唉选举出 Leader 。在 Leader 宕机后服务临时不可用，需要重新选举 Leader 继续服务。Multi-Paxos 通过改变 Prepare 阶段的作用范围至后面 Leader 的连续提交，从而使得 Leader 的连续提交只需要执行一次 Prepare 阶段，后续只需要执行 Accept 阶段，将两阶段变为一阶段，提高了效率。
+另外， Leader 的选举也是一次决议的形成，可以通过执行一次 Basic Paxos 实例选举出 Leader 。在 Leader 宕机后服务临时不可用，需要重新选举 Leader 继续服务。
+
+Multi-Paxos 通过改变 Prepare 阶段的作用范围至后面 Leader 的连续提交，从而使得 Leader 的连续提交只需要执行一次 Prepare 阶段，后续只需要执行 Accept 阶段，将两阶段变为一阶段，提高了效率。
 
 ## Raft 算法
 
@@ -116,14 +118,14 @@ Raft 将节点划分为三类：
 - Leader 通过心跳维持任期内统治，每个任期有一个递增的 term 编号进行标记
 - Follower 在选举超时时间内没有收到 Leader 心跳，就会等待一段随机时间后发起一次 Leader 选举
 - 将当前 term 加一，转换为 Candidate，给自己投票并给集群中其它服务器发送 RequestVote RPC
-- 需保证选举出的 Leader 上一定具有最新的已提交的日志
-- term 作为轮次记录作用，Follower 在一轮投票中只能投一票
+- 需保证选举出的 Leader 上一定具有最新的已提交的日志，即 Candidate 的投票报文中需要包含最新提交日志信息
+- term 作为轮次记录作用，Follower 在一轮投票中只能投一票，即收到的 term 比当前记录的大，则投一票，并更新 term，否则投拒绝票
 
 Follower 发起的 Leader 选举结果有以下三种情况：
 
-- 赢得了多数的选票，成功选举为Leader
-- 收到了Leader的消息，表示有其它服务器已经抢先当选了Leader
-- 没有服务器赢得多数的选票，Leader选举失败，等待选举时间超时后发起下一次选举
+- 赢得了多数的选票，成功选举为 Leader
+- 收到了 Leader 的消息，表示有其它服务器已经抢先当选了 Leader
+- 没有服务器赢得多数的选票， Leader 选举失败，等待选举时间超时后发起下一次选举
 
 ### 日志同步
 
@@ -131,9 +133,13 @@ Follower 发起的 Leader 选举结果有以下三种情况：
 - Leader 把请求作为日志条目（log entries）加入自己的日志，并行向 Follower 发起 AppendEntries RPC 复制日志条目
 - 一条日志被复制到大多数服务器上，Leader 将这条日志应用到自身状态机上，并返回客户端执行结果
 - Leader 通知其他节点提交日志（即通知其他节点将日志应用到自己的状态机上）
+- 强一致性与弱一致性：如果 Leader 在确认半数以上 Follower 都提交了日志后，再返回客户端执行结果，那么可以认为是强一致性的（比如 etcd）；如果 Leader 更新自身后即返回客户端结果，同时异步发送 Follower 更新日志，那么可以认为是弱一致性的（redis 即是异步写 aof 和更新副本的）
 
-## Gossip 算法
+## GOSSIP 算法
 
+GOSSIP 算法是一种 P2P 算法，去中心化，没有主备之分，多个参与者之间能够达到最终一致性。存在问题是参与者太多可能造成参与者之间的网络交互信息量较大，系统达到最终一致所用时间较长。
+
+Redis 集群采用 GOSSIP 算法在多个参与节点之间交互集群和分片信息。
 
 ## 参考
 
