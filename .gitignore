@@ -6,3 +6,4 @@ _site
 Gemfile.lock
 .vscode/
 .jekyll-metadata
+*.drawio.bkp

@@ -258,3 +258,24 @@ class Derived: public Base {private: int* x; public: Derived(){x = new int(1);};
 Base* p = new Derived();
 delete p; // 如果 ~Base 没有 virtual 则不会调用 Derived 的析构函数，造成内存泄露
 ```
+
+## placement new
+
+new expression 包括两步工作，先申请内存，再调用对象的构造函数，c++11 增加了 placement new 操作符，用于在已分配的内存（堆或栈）上执行构造函数：
+
+```c++
+struct Test {};
+void foo()
+{
+    char* buf = new char[1024];
+    Test* t = new (buf) Test();
+    t->~Test();
+    delete[] buf;
+
+    char buf[1024];
+    Test* t = new (buf) Test();
+    t->~Test();
+}
+```
+
+为什么有 placement new 而没有对应的 palcement delete 操作符？因为析构函数可以显式调用，构造函数无法显式调用，需要编译器调用。
